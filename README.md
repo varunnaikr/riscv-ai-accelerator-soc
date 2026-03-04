@@ -13,3 +13,16 @@ Design and implement a custom RV32I RISC-V core integrated with a low-power neur
 5. ASIC Synthesis & PPA Analysis
 
 Status: Phase 1 - Foundation
+## Documentation
+
+Detailed documentation can be found in the docs folder:
+
+- docs/architecture.md
+- docs/systolic_array.md
+- docs/design_flow.md
+
+## Benchmark Results
+
+See:
+
+results/benchmark.md
