@@ -31,7 +31,6 @@ accelerator_controller ctrl(
 systolic_array_8x8 array(
 
 .clk(clk),
-.rst(rst),
 
 .a0(a0), .a1(a1), .a2(a2), .a3(a3),
 .a4(a4), .a5(a5), .a6(a6), .a7(a7),
