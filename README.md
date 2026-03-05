@@ -3,7 +3,13 @@
 Author: Varun R
 
 ## Goal
-Design and implement a custom RV32I RISC-V core integrated with a low-power neural network accelerator.
+Designed and implemented an 8×8 systolic-array based AI accelerator in Verilog for fast matrix multiplication. 
+The design integrates a RISC-V pipeline CPU, accelerator controller, and memory interface.
+
+• 64 Processing Elements (MAC units)
+• 1.536 GOPS compute throughput
+• ~1.8 µs latency for 8×8 matrix multiplication
+• Synthesized using open-source FPGA flow (Yosys + nextpnr + IceStorm)
 
 ## Phases
 1. CPU Design (RV32I)
