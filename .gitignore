@@ -1,4 +1,17 @@
+# simulation outputs
 *.vcd
-*.out
 *.log
-obj_dir/
+*.out
+
+# compiled binaries
+sim/accel_test
+sim/soc_test
+sim/systolic_test
+accelerator/systolic_test
+
+# verilator build files
+sim/obj_dir/
+
+# temporary files
+*.swp
+*.tmp

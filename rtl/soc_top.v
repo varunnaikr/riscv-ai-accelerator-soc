@@ -1,36 +1,48 @@
 module soc_top(
+
 input clk,
-input reset
+input rst,
+
+input cpu_write,
+input [1:0] cpu_addr,
+input [31:0] cpu_data,
+
+output [15:0] c0,c1,c2,c3,c4,c5,c6,c7
+
 );
 
-wire [31:0] addr;
-wire [31:0] write_data;
-wire [31:0] read_data;
-wire mem_write;
-wire mem_read;
+wire start_signal;
+wire [31:0] status;
 
-wire [31:0] accel_read_data;
+accelerator_interface accel_if(
 
-cpu_pipeline cpu(
 .clk(clk),
-.reset(reset),
-.addr(addr),
-.write_data(write_data),
-.read_data(read_data),
-.mem_write(mem_write),
-.mem_read(mem_read)
+.rst(rst),
+
+.write_enable(cpu_write),
+.addr(cpu_addr),
+.data_in(cpu_data),
+
+.start(start_signal),
+.status(status)
+
 );
 
-accelerator_interface accel(
+accelerator_top accel(
+
 .clk(clk),
-.reset(reset),
-.addr(addr),
-.write_data(write_data),
-.write_en(mem_write),
-.read_en(mem_read),
-.read_data(accel_read_data)
-);
+.rst(rst),
+.start(start_signal),
 
-assign read_data = accel_read_data;
+.a0(1),.a1(2),.a2(3),.a3(4),
+.a4(5),.a5(6),.a6(7),.a7(8),
+
+.b0(1),.b1(2),.b2(3),.b3(4),
+.b4(5),.b5(6),.b6(7),.b7(8),
+
+.c0(c0),.c1(c1),.c2(c2),.c3(c3),
+.c4(c4),.c5(c5),.c6(c6),.c7(c7)
+
+);
 
 endmodule

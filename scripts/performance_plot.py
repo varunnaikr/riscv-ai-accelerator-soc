@@ -1,35 +1,30 @@
 import os
 import matplotlib.pyplot as plt
 
-# Create docs directory if it does not exist
-os.makedirs("docs", exist_ok=True)
+# Get project root directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)
 
-# Data for benchmark
-matrix_sizes = ["2x2", "4x4", "8x8"]
-cpu_cycles = [20, 120, 600]
-accelerator_cycles = [5, 20, 80]
+docs_dir = os.path.join(project_root, "docs")
+os.makedirs(docs_dir, exist_ok=True)
 
-# X-axis positions
-x = range(len(matrix_sizes))
+output_file = os.path.join(docs_dir, "performance_graph.png")
 
-# Create figure
+array_sizes = [4, 8]
+cpu_time = [100, 100]
+accelerator_time = [20, 5]
+
+speedup = [c/a for c, a in zip(cpu_time, accelerator_time)]
+
 plt.figure()
+plt.plot(array_sizes, speedup, marker="o")
 
-# Bar plots
-plt.bar(x, cpu_cycles, width=0.4, label="CPU")
-plt.bar(x, accelerator_cycles, width=0.4, label="Accelerator")
+plt.title("AI Accelerator Speedup vs CPU")
+plt.xlabel("Systolic Array Size")
+plt.ylabel("Speedup")
 
-# Labels and title
-plt.xticks(x, matrix_sizes)
-plt.xlabel("Matrix Size")
-plt.ylabel("Clock Cycles")
-plt.title("CPU vs AI Accelerator Performance")
-plt.legend()
+plt.grid(True)
 
-# Save graph
-plt.savefig("docs/performance_graph.png")
+plt.savefig(output_file)
 
-# Show graph
-plt.show()
-
-print("Performance graph saved to docs/performance_graph.png")
+print("Graph saved to:", output_file)

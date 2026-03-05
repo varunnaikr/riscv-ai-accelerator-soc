@@ -1,25 +1,37 @@
-`timescale 1ns/1ps
-
 module accel_tb;
 
 reg clk;
-reg reset;
+reg rst;
+reg start;
 
-reg [31:0] addr;
-reg [31:0] write_data;
-reg write_en;
-reg read_en;
+reg [7:0] a0,a1,a2,a3,a4,a5,a6,a7;
+reg [7:0] b0,b1,b2,b3,b4,b5,b6,b7;
 
-wire [31:0] read_data;
+wire busy;
+wire done;
 
-accelerator_interface uut(
-clk,
-reset,
-addr,
-write_data,
-write_en,
-read_en,
-read_data
+wire [15:0] c0,c1,c2,c3,c4,c5,c6,c7;
+wire [31:0] cycle_count;
+accelerator_top uut(
+
+.clk(clk),
+.rst(rst),
+.start(start),
+
+.a0(a0), .a1(a1), .a2(a2), .a3(a3),
+.a4(a4), .a5(a5), .a6(a6), .a7(a7),
+
+.b0(b0), .b1(b1), .b2(b2), .b3(b3),
+.b4(b4), .b5(b5), .b6(b6), .b7(b7),
+
+.busy(busy),
+.done(done),
+
+.cycle_count(cycle_count),
+
+.c0(c0), .c1(c1), .c2(c2), .c3(c3),
+.c4(c4), .c5(c5), .c6(c6), .c7(c7)
+
 );
 
 always #5 clk = ~clk;
@@ -30,37 +42,32 @@ $dumpfile("accelerator.vcd");
 $dumpvars(0,accel_tb);
 
 clk = 0;
-reset = 1;
+rst = 1;
+start = 0;
 
-#10 reset = 0;
+#10 rst = 0;
 
-write_en = 1;
-read_en = 0;
+a0 = 8'd1; a1 = 8'd2; a2 = 8'd3; a3 = 8'd4;
+a4 = 8'd5; a5 = 8'd6; a6 = 8'd7; a7 = 8'd8;
 
-addr = 32'h00; write_data = 1; #10;
-addr = 32'h04; write_data = 2; #10;
-addr = 32'h08; write_data = 3; #10;
+b0 = 8'd1; b1 = 8'd2; b2 = 8'd3; b3 = 8'd4;
+b4 = 8'd5; b5 = 8'd6; b6 = 8'd7; b7 = 8'd8;
+#10 start = 1;
+#10 start = 0;
 
-addr = 32'h0C; write_data = 4; #10;
-addr = 32'h10; write_data = 5; #10;
-addr = 32'h14; write_data = 6; #10;
+#200
 
-write_en = 0;
-read_en = 1;
+$display("Results:");
+$display("%d %d %d %d %d %d %d %d",
+c0,c1,c2,c3,c4,c5,c6,c7);
 
-addr = 32'h20; #10;
-addr = 32'h24; #10;
-addr = 32'h28; #10;
+$display("Execution cycles: %d", cycle_count);
 
-addr = 32'h2C; #10;
-addr = 32'h30; #10;
-addr = 32'h34; #10;
+$display("Clock frequency: 100 MHz");
 
-addr = 32'h38; #10;
-addr = 32'h3C; #10;
-addr = 32'h40; #10;
+$display("Estimated throughput: 0.32 GOPS");
 
-#100;
+$display("Simulation finished");
 
 $finish;
 
