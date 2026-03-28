@@ -1,6 +1,6 @@
-# RISC-V Based Low-Power Edge AI Accelerator SoC
+# RISC-V Edge AI Accelerator SoC
 
-Author: Varun R
+A compact **RISC-V + AI accelerator SoC** built in Verilog, focused on low-power edge inference and fast matrix multiplication using an 8×8 systolic array.
 
 ## Goal
 Designed and implemented an 8×8 systolic-array based AI accelerator in Verilog for fast matrix multiplication.
@@ -58,7 +58,7 @@ Detailed documentation is available in the `docs` folder:
 ## Benchmark Results
 See `results/benchmark.md` for measured accelerator speedup data.
 
-See:
+## Author
 
 results/benchmark.md
 
