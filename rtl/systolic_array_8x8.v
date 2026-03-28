@@ -22,6 +22,7 @@ for(j=0;j<8;j=j+1) begin
 pe pe_inst(
 
 .clk(clk),
+.rst(1'b0),
 
 .a_in((j==0) ? 
 (i==0?a0:i==1?a1:i==2?a2:i==3?a3:i==4?a4:i==5?a5:i==6?a6:a7)

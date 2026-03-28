@@ -57,3 +57,21 @@ Detailed documentation is available in the `docs` folder:
 
 ## Benchmark Results
 See `results/benchmark.md` for measured accelerator speedup data.
+
+See:
+
+results/benchmark.md
+
+
+## ASIC Flow Kickoff
+
+To start the ASIC-oriented flow (synthesis-first):
+
+```bash
+bash scripts/start_asic_flow.sh --dry-run
+bash scripts/start_asic_flow.sh
+```
+
+For a deeper flow description and next milestones, see:
+
+- docs/asic_flow.md
