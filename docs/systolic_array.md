@@ -1,16 +1,22 @@
 # Systolic Array Accelerator
 
-The accelerator implements a **systolic array architecture** for efficient matrix multiplication.
+The accelerator uses a **systolic-array dataflow** to speed up matrix multiplication through localized, pipelined MAC operations.
 
-## Processing Element (PE)
+## Why Systolic?
 
-Each PE performs:
+- High data reuse across neighboring processing elements (PEs)
+- Predictable, regular interconnect and timing behavior
+- Good fit for tiled GEMM-style workloads
 
-- Multiply operation
-- Accumulate operation
-- Data forwarding to neighboring PEs
+## Processing Element (PE) Behavior
 
-## Dataflow Diagram (8x8 Concept)
+Each PE is responsible for:
+
+- **Multiply** incoming `A` and `B` operands
+- **Accumulate** into a local partial-sum register
+- **Forward** operands to downstream neighbors
+
+## Dataflow Diagram (8×8 Concept)
 
 ```mermaid
 flowchart LR
@@ -32,15 +38,15 @@ stateDiagram-v2
     Drain --> [*]
 ```
 
-## Rhythmic Data Propagation
+## Rhythm of Computation
 
-- A operands move horizontally across rows.
-- B operands move vertically across columns.
-- Each PE accumulates local partial sums and forwards data every cycle.
-- After pipeline fill, one result can be produced per cycle (for the active diagonal wavefront).
+- `A` operands flow left-to-right across rows.
+- `B` operands flow top-to-bottom across columns.
+- Partial sums build up cycle-by-cycle inside each PE.
+- After pipeline fill, the array can sustain a high output cadence for active tiles.
 
-## Diagram Authoring Tips
+## Practical Notes for Iteration
 
-- Create polished visuals in **Figma** using an 8x8 component grid for PEs.
-- Keep a lightweight source-of-truth in **Mermaid** for version-controlled diffs.
-- Use **draw.io/diagrams.net** when you need drag-and-drop arrows and lane annotations.
+- Validate with small tiles first (2×2, 4×4) before full 8×8 runs.
+- Keep PE interfaces minimal and timing-aware to ease scaling.
+- Use waveform checkpoints at tile boundaries (`LOAD`, `COMPUTE`, `WRITEBACK`) for fast debug.

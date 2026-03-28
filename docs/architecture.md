@@ -1,8 +1,17 @@
 # SoC Architecture
 
-The system integrates a RISC-V compatible processor with a custom AI accelerator.
+This SoC integrates a **RISC-V CPU pipeline** with a **memory-mapped AI accelerator subsystem** for matrix-multiply workloads.
 
-## Architecture Overview (Flowchart)
+## Component Responsibilities
+
+- **CPU (RV32I pipeline)**: runs control code, programs accelerator registers, and handles system tasks.
+- **System interconnect**: routes memory and MMIO transactions.
+- **Memory interface / SRAM**: stores operands and output tiles.
+- **Accelerator interface (MMIO)**: exposes configuration and status registers to software.
+- **Accelerator controller**: sequences load, compute, and writeback phases.
+- **8×8 systolic array**: performs highly parallel MAC operations.
+
+## Architecture Overview
 
 ```mermaid
 flowchart LR
@@ -39,5 +48,11 @@ stateDiagram-v2
     WRITEBACK --> IDLE : reset
 ```
 
-The CPU configures control registers through MMIO, the controller sequences data movement and compute, and the systolic array performs matrix multiplication.
+## Software-to-Hardware Control Sequence
 
+1. CPU writes source/destination pointers and tile metadata into MMIO registers.
+2. CPU asserts `start` through the accelerator interface.
+3. Controller transitions `IDLE → LOAD → COMPUTE → WRITEBACK`.
+4. CPU polls/receives `done` and acknowledges completion.
+
+This separation keeps software control simple while preserving high compute density in hardware.

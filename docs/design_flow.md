@@ -1,28 +1,35 @@
-# Design Flow
+# Design & Verification Flow
 
-The project follows a standard hardware design and verification flow:
+This project follows a hardware-first workflow optimized for rapid RTL iteration and reproducible simulation/synthesis results.
 
-1. Architecture design
-2. RTL implementation in Verilog
-3. Testbench development
-4. Simulation using Icarus Verilog
-5. Waveform analysis using GTKWave
-6. Performance evaluation
-7. FPGA synthesis using Yosys + nextpnr + IceStorm
+## End-to-End Stages
+
+1. **Architecture definition** (CPU/accelerator partitioning)
+2. **RTL implementation** (Verilog modules)
+3. **Testbench authoring** (module + subsystem level)
+4. **Simulation** (Icarus Verilog)
+5. **Waveform/debug** (GTKWave)
+6. **Benchmarking** (latency and throughput)
+7. **FPGA synthesis + PnR** (Yosys + nextpnr + IceStorm)
 
 ## Reproducible Commands
-
-Use the Makefile targets to run the flow:
 
 ```bash
 make sim-all
 make synth
 ```
 
-Individual simulation targets are also available (`sim-alu`, `sim-cpu`, `sim-accel`, etc.) for focused debugging.
-The project follows a standard hardware design and validation flow.
+For targeted debug loops, run individual simulation targets such as:
 
-## End-to-End Development Flowchart
+- `make sim-alu`
+- `make sim-decoder`
+- `make sim-regfile`
+- `make sim-cpu`
+- `make sim-cpu-pipeline`
+- `make sim-systolic`
+- `make sim-accel`
+
+## Development Lifecycle Diagram
 
 ```mermaid
 flowchart TD
@@ -39,7 +46,7 @@ flowchart TD
     J -- Yes --> K[Documentation + Sign-off]
 ```
 
-## Verification State Diagram
+## Verification Maturity State Diagram
 
 ```mermaid
 stateDiagram-v2
@@ -57,7 +64,6 @@ stateDiagram-v2
 
 ## Tooling
 
-- Architecture and presentation diagrams: **Figma**
-- Fast editable engineering diagrams: **Mermaid**, **draw.io/diagrams.net**
+- Diagram authoring and architecture communication: **Mermaid / draw.io / Figma**
 - Simulation and debug: **Icarus Verilog + GTKWave**
 - Synthesis and implementation: **Yosys + nextpnr + IceStorm**

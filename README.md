@@ -1,28 +1,49 @@
 # RISC-V Edge AI Accelerator SoC
 
-A compact **RISC-V + AI accelerator SoC** built in Verilog, focused on low-power edge inference and fast matrix multiplication using an 8×8 systolic array.
+A compact **RISC-V + AI accelerator SoC** implemented in Verilog for low-power edge inference workloads, centered on an **8×8 systolic-array matrix-multiply engine**.
 
-## Goal
-Designed and implemented an 8×8 systolic-array based AI accelerator in Verilog for fast matrix multiplication.
-The design integrates a RISC-V pipeline CPU, accelerator controller, and memory interface.
+---
 
-- 64 Processing Elements (MAC units)
-- 1.536 GOPS compute throughput
-- ~1.8 µs latency for 8×8 matrix multiplication
-- Synthesized using open-source FPGA flow (Yosys + nextpnr + IceStorm)
+## At a Glance
 
-## Project Phases
-1. CPU Design (RV32I)
-2. Neural Accelerator Design
-3. SoC Integration
-4. Simulation & Benchmarking
-5. FPGA Synthesis Flow
+| Area | Details |
+|---|---|
+| CPU | RV32I-compatible pipelined core |
+| Accelerator | 8×8 systolic array (64 PEs / MAC units) |
+| Throughput (reported) | 1.536 GOPS |
+| 8×8 Matmul latency (reported) | ~1.8 µs |
+| Toolchain | Icarus Verilog, GTKWave, Yosys, nextpnr, IceStorm |
 
-**Current status:** Phase 5 (FPGA synthesis flow integrated, simulation benches available)
+## Repository UX Map
+
+Use this as the fastest way to find what you need:
+
+- **Design RTL**: `rtl/`
+- **Accelerator-focused RTL/TB**: `accelerator/`, `sim/systolic_tb.v`
+- **Simulation testbenches**: `sim/`
+- **Build/synthesis artifacts**: `build/`
+- **Automation scripts**: `scripts/`
+- **Documentation**: `docs/`
+- **Performance results**: `results/benchmark.md`
+
+## Current Project Phase
+
+The repository is currently in **Phase 5: FPGA synthesis flow integration**, with module and subsystem simulation targets available.
+
+### Phase Breakdown
+
+1. CPU design (RV32I)
+2. Neural accelerator design
+3. SoC integration
+4. Simulation & benchmarking
+5. FPGA synthesis flow ✅
+
+---
 
 ## Quick Start
 
-### 1) Run simulation targets
+### 1) Run targeted simulations
+
 ```bash
 make sim-alu
 make sim-decoder
@@ -33,45 +54,50 @@ make sim-systolic
 make sim-accel
 ```
 
-Run the full simulation sweep:
+### 2) Run the full simulation sweep
+
 ```bash
 make sim-all
 ```
 
-### 2) Run synthesis
+### 3) Run synthesis
+
 ```bash
 make synth
 ```
 
-### 3) Clean generated artifacts
+### 4) Clean generated artifacts
+
 ```bash
 make clean
 ```
 
-## Documentation
-Detailed documentation is available in the `docs` folder:
-
-- `docs/architecture.md`
-- `docs/systolic_array.md`
-- `docs/design_flow.md`
-
-## Benchmark Results
-See `results/benchmark.md` for measured accelerator speedup data.
-
-## Author
-
-results/benchmark.md
-
+---
 
 ## ASIC Flow Kickoff
-
-To start the ASIC-oriented flow (synthesis-first):
 
 ```bash
 bash scripts/start_asic_flow.sh --dry-run
 bash scripts/start_asic_flow.sh
 ```
 
-For a deeper flow description and next milestones, see:
+For milestones and details, see `docs/asic_flow.md`.
 
-- docs/asic_flow.md
+---
+
+## Documentation Index
+
+- Architecture overview: `docs/architecture.md`
+- Systolic array details: `docs/systolic_array.md`
+- Design/verification flow: `docs/design_flow.md`
+- ASIC-oriented flow: `docs/asic_flow.md`
+
+## Benchmark Summary
+
+For CPU-vs-accelerator cycle comparisons and speedup table, see `results/benchmark.md`.
+
+---
+
+## Notes
+
+This repository is hardware-first (RTL + verification + synthesis flow). There is no separate GUI/web dashboard; the primary user experience is through Make targets, documentation, and waveform/debug tooling.
