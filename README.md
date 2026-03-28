@@ -32,3 +32,17 @@ Detailed documentation can be found in the docs folder:
 See:
 
 results/benchmark.md
+
+
+## ASIC Flow Kickoff
+
+To start the ASIC-oriented flow (synthesis-first):
+
+```bash
+bash scripts/start_asic_flow.sh --dry-run
+bash scripts/start_asic_flow.sh
+```
+
+For a deeper flow description and next milestones, see:
+
+- docs/asic_flow.md

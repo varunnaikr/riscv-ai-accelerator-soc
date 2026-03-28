@@ -1,0 +1,45 @@
+# Usage:
+# yosys -c scripts/asic_synth.ys -q -l build/asic/yosys.log \
+#   -D TOP=soc_top [-D LIBERTY=/path/to/lib.lib]
+
+if {![info exists TOP]} {
+  set TOP soc_top
+}
+
+set OUTDIR build/asic
+file mkdir $OUTDIR
+
+read_verilog rtl/alu.v
+read_verilog rtl/cpu.v
+read_verilog rtl/cpu_pipeline.v
+read_verilog rtl/regfile.v
+read_verilog rtl/decoder.v
+read_verilog rtl/sram.v
+read_verilog rtl/memory_interface.v
+read_verilog rtl/accelerator_interface.v
+read_verilog rtl/accelerator_controller.v
+read_verilog rtl/pe.v
+read_verilog rtl/systolic_array_8x8.v
+read_verilog rtl/accelerator_top.v
+read_verilog rtl/soc_top.v
+
+hierarchy -check -top $TOP
+
+# Generic optimization and mapping
+proc; opt; fsm; opt; memory; opt
+techmap; opt
+abc -fast
+clean -purge
+
+# If a liberty file is provided, remap for more realistic area/timing reports.
+if {[info exists LIBERTY]} {
+  dfflibmap -liberty $LIBERTY
+  abc -liberty $LIBERTY
+  stat -liberty $LIBERTY > $OUTDIR/stat_${TOP}_liberty.rpt
+} else {
+  stat > $OUTDIR/stat_${TOP}_generic.rpt
+}
+
+write_verilog -noattr $OUTDIR/${TOP}_synth.v
+write_json $OUTDIR/${TOP}_synth.json
+check > $OUTDIR/check_${TOP}.rpt
