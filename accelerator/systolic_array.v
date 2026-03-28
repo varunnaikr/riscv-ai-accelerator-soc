@@ -67,7 +67,7 @@ for(i=0;i<4;i=i+1) begin
                 .rst(rst),
                 .a_in(a_wire[i][j-1]),
                 .b_in(b_wire[i-1][j]),
-                .psum_in(psum_wire[i][j]),
+                .psum_in(psum_wire[i][j-1]),
                 .a_out(a_wire[i][j]),
                 .b_out(b_wire[i][j]),
                 .psum_out(psum_wire[i][j])
