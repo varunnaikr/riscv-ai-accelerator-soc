@@ -1,17 +1,36 @@
-# simulation outputs
+# Waveforms and simulation byproducts
 *.vcd
+*.fst
 *.log
 *.out
 
-# compiled binaries
-sim/accel_test
-sim/soc_test
-sim/systolic_test
-accelerator/systolic_test
+# Core dumps and crash artifacts
+core
+core.*
+*.core
 
-# verilator build files
-sim/obj_dir/
-
-# temporary files
+# Temporary editor/system files
 *.swp
+*.swo
 *.tmp
+.DS_Store
+
+# Python cache/build
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Docker/temp runtime
+.docker/
+/tmp/
+
+# EDA heavy generated artifacts (reproducible via flow)
+build/
+sim/obj_dir/
+*.bin
+*.asc
+*.json
+
+# Keep documentation, reports, figures, and tracked results
+!docs/**
+!results/**

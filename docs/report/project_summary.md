@@ -1,23 +1,26 @@
 # Project Summary
 
 ## Title
+**RISC-V Based Low-Power Edge AI Accelerator SoC: RTL-to-Physical Design Implementation in Sky130**
 
-**RISC-V Based Low-Power Edge AI Accelerator SoC with 8×8 Systolic Array**
+## Objective
+Develop and document a custom edge-AI-oriented SoC from RTL through advanced physical design stages using open-source tools and the Sky130 PDK.
 
-## Executive Technical Summary
+## Implemented Blocks
+- 8×8 systolic array accelerator (64 PEs)
+- Accelerator controller FSM
+- Memory interface
+- Cycle counter and benchmark support
+- RISC-V SoC-level integration
 
-This project delivers a complete frontend and substantially advanced backend implementation of an ASIC-oriented edge AI SoC. The system integrates a RISC-V control plane with a custom 8×8 systolic array accelerator (64 PEs), supported by controller FSM logic and memory interface blocks.
-
-The design has been synthesized and physically implemented through floorplanning, placement, clock tree synthesis, and static timing analysis using open-source EDA tooling and Sky130 technology mapping. Post-CTS timing indicates an estimated performance near ~80 MHz against a 100 MHz target.
-
-## Project Highlights
-
-- ASIC-ready RTL and full verification coverage of the accelerator-centric architecture.
-- Sky130-compatible synthesis and technology mapping.
-- OpenROAD backend completion through CTS.
-- Quantified physical QoR and timing metrics suitable for academic/industry review.
-- Clear next-step roadmap toward route completion and signoff-level closure.
-
-## Outcome
-
-The repository serves as a research-grade VLSI portfolio artifact demonstrating end-to-end competency from microarchitecture design to near-signoff physical implementation analysis.
+## Completion Status
+- RTL design: complete
+- Verification: complete
+- Generic synthesis: complete
+- Sky130 mapping: complete
+- Floorplanning: complete
+- IO pin placement: complete
+- Global placement: complete
+- CTS: complete
+- STA: complete
+- Detailed routing: partial (blocked by pin-access/collateral limits)
