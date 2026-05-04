@@ -1,42 +1,33 @@
 # Physical Design Report
 
-## Overview
+## Flow Context
+Backend implementation used a manual/scripted OpenROAD flow with Sky130 standard cells.
 
-This report summarizes the physical implementation status of the RISC-V based edge AI accelerator SoC on the Sky130 technology stack using an OpenROAD-centered flow.
+## Physical Design Stages Completed
+1. Netlist mapping to Sky130 library
+2. Floorplan initialization and core shaping
+3. IO pin placement for 293 pads/pins
+4. Global placement for ~90k cells
+5. Clock Tree Synthesis and buffering
+6. Post-CTS STA
 
-## Backend Flow Status
-
-| Stage | Status |
-|---|---|
-| Synthesis | Completed |
-| Tech mapping (Sky130) | Completed |
-| Floorplanning | Completed |
-| IO placement | Completed |
-| Global placement | Completed |
-| Clock Tree Synthesis | Completed |
-| STA (post-CTS) | Completed |
-| Detailed routing | Partially attempted (blocked) |
-
-## Area and Design Statistics
-
-| Metric | Value |
+## Key Physical Metrics
+| Parameter | Value |
 |---|---:|
 | Standard cells | 90,586 |
 | Nets | 90,281 |
 | Connections | 313,671 |
-| Cell area | 710,381 µm² |
-| Core area | 1,180,176 µm² |
-| Utilization | 64.2% |
-| Die size | 1128.105 µm × 1128.105 µm |
+| Cell area | 710,381.312 µm² |
+| Core area | 1,180,176.883 µm² |
+| Utilization | 60.2% |
+| Die dimensions | 1128.105 µm × 1128.105 µm |
 
-## Clock Network Summary
-
-| Metric | Value |
+## CTS Outcome
+| Parameter | Value |
 |---|---:|
 | Clock sinks | 4,130 |
-| Inserted CTS buffers | 589 |
-| Clock tree depth | 5 stages |
+| Inserted buffers | 589 |
+| Clock tree depth | 5 |
 
-## Notes
-
-The implementation has progressed through major backend milestones and is suitable for portfolio-grade presentation of physical design competence. Detailed routing remains an open item due to infrastructure limitations rather than frontend incompleteness.
+## Routing Status
+Detailed routing was attempted but not fully closed due to pin-access and collateral limitations in minimal manual-flow conditions.

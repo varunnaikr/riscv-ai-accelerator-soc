@@ -1,25 +1,24 @@
 # Timing Report
 
-## Target
+## Timing Target
+- Target clock frequency: **100 MHz**
 
-- **Target clock frequency:** 100 MHz
-- **Clock period:** 10 ns
-
-## Post-CTS Timing Snapshot
-
+## Post-CTS Timing Summary
 | Metric | Value |
 |---|---:|
-| Estimated Fmax | ~80 MHz |
-| Worst Negative Slack (WNS) | -2.491 ns |
-| Total Negative Slack (TNS) | -604.82 |
+| Critical path delay | 12.362 ns |
+| Achieved Fmax | ~80.9 MHz |
+| WNS | -2.491 ns |
+| TNS | -604.82 |
+
+## Critical Path Observation
+The dominant setup path repeatedly traverses arithmetic carry-chain logic (`maj3`) within the PE accumulation datapath.
 
 ## Interpretation
+- Current backend quality demonstrates strong implementation progress but misses 100 MHz closure.
+- Timing is limited by arithmetic depth rather than clock-tree collapse.
 
-The current post-CTS timing indicates that the design is close to an operational regime appropriate for edge acceleration prototypes, with additional optimization required to reach nominal 100 MHz closure.
-
-## Recommended Optimization Directions
-
-1. Congestion-aware placement refinement.
-2. Buffer/inverter sizing and selective logic restructuring.
-3. Clock skew balancing improvements and CTS tuning.
-4. Post-route extraction and iterative STA-guided ECO.
+## Improvement Directions
+- Refactor PE datapath to reduce combinational carry depth.
+- Explore retiming/pipelining boundaries around accumulation paths.
+- Add path-focused synthesis and physical optimization constraints.
