@@ -1,0 +1,5 @@
+read_verilog rtl/pe.v
+read_verilog rtl/systolic_array_8x8.v
+read_verilog rtl/fpga_top.v
+
+synth_ice40 -top fpga_top -json build/accelerator.json
